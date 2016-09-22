@@ -1,3 +1,5 @@
+This is directly download from http://cogcomp.cs.illinois.edu/page/tutorial.201310/
+
 This folder holds code and data corresponding to tutorials found at:
   -- http://cogcomp.cs.illinois.edu/~mayhew2/lbjava_tutorial/basic.php
   -- http://cogcomp.cs.illinois.edu/page/tutorial.201310/
