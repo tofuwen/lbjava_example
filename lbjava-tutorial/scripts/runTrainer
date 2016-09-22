@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Compiling Trainer.java and DocumentReader.java"
+PACKAGE=src/edu/illinois/cs/cogcomp/tutorial
+javac -classpath lib/*:bin -d bin $PACKAGE/Trainer.java $PACKAGE/DocumentReader.java
+
+echo "Running Trainer.java"
+TRAINFOLDER="data/spam/train"
+TESTFOLDER="data/spam/test"
+TRAININGROUNDS=50
+java -classpath lib/*:bin edu.illinois.cs.cogcomp.tutorial.Trainer $TRAINFOLDER $TESTFOLDER $TRAININGROUNDS
+
+

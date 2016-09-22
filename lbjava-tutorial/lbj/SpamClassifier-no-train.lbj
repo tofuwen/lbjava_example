@@ -1,0 +1,53 @@
+package edu.illinois.cs.cogcomp.tutorial;
+import java.util.List;
+ 
+/* First we define the feature functions. The Document class is defined
+elsewhere in our source - we will discuss that later. The sense keyword
+means that what follows is to be considered a feature. Notice that this
+function and the next rely on the Document data structure.
+ 
+This particular function simply produces "bag of words" features. */
+discrete% WordFeatures(Document d) <- {
+    List words = d.getWords();
+    for (int i = 0; i < words.size(); i++)
+        sense words.get(i);
+}
+ 
+/* This function produces bigram features. Notice how the argument to
+   "sense" has changed. */
+discrete% BigramFeatures(Document d) <- {
+    List words = d.getWords();
+    for (int i = 0; i < words.size() - 1; i++)
+        sense words.get(i)+"-"+words.get(i+1);
+}
+ 
+/* Here we define the labels our classifier can take. They are "spam" and "ham".
+   Again, we rely on the Document class, which we will discuss later.  */
+discrete{"spam", "ham"} Label(Document d) <- { return d.getLabel(); }
+ 
+/* A learned classifier; its definition comes from data. Read the next three
+   lines as: define a classifier which takes data in the form of Documents, and
+   learns the labels we have defined above as "Label" and uses the features we have
+   defined above. */
+discrete SpamClassifier(Document d) <-
+    learn Label
+    using WordFeatures, BigramFeatures
+    //from new DocumentReader("data/spam/train") // <-- NOTICE: commented out!
+    //5 rounds
+    // Use a NaiveBayes classifier (other options listed below)
+    //with new NaiveBayes()
+    // with new SupportVectorMachine()
+    // with new AdaBoost()
+    // with new LinearThresholdUnit(0.5)
+    // with new PassiveAggressive()
+    // with new SparseConfidenceWeighted()
+    // with new SparseMIRA()
+    // with new SparseNetworkLearner()
+    with SparseAveragedPerceptron {
+       learningRate = 0.1 ;
+       thickness = 3.5;
+    }
+
+    //testFrom new DocumentReader("data/spam/test")  // <-- NOTICE: commented out!
+    //progressOutput 2000
+ end
